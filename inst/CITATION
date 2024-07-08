@@ -1,0 +1,14 @@
+bibentry(
+  bibtype  = "Article",
+  title = "PCA-PAM50 improves consistency between breast cancer intrinsic and clinical subtyping reclassifying a subset of luminal A tumors as luminal B",
+  author = "Raj-Kumar, Praveen-Kumar and Liu, Jianfang and Hooke, Jeffrey A and Kovatich, Albert J and Kvecher, Leonid and Shriver, Craig D and Hu, Hai",
+  journal = "Scientific Reports",
+  year = "2019 May 28",
+  volume = "9(1)",
+  number = "7956",
+  doi = "10.1038/s41598-019-44339-4",
+  pmid = "31138829",
+  pmcid = "PMC6538748",
+  note = "Sci Rep.",
+  URL = "https://doi.org/10.1038/s41598-019-44339-4"
+)

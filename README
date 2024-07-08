@@ -1,0 +1,45 @@
+
+                                                        
+
+###~~~~ PCAPAM50
+
+PCAPAM50 is used to perform intrinsic subtyping for breast cancer gene expression data. PCAPAM50 leverages principal component analysis (PCA) and iterative PAM50 calls to derive the gene expression-based ER status. This generates an ER-balanced subset which is automatically used for gene centering and subsequent intrinsic calls. Thus, PCAPAM50 performs intrinsic subtyping in ER status unbalanced cohorts.
+
+
+#~ The package comes with a sample/TEST PAM50 matrix to demostrate runing the program.
+####~~ 'TEST.ihc' and 'TEST.matrix' is provided ----subtitute these to make calls for your data
+####~~ To make conventional intrinsic call that is only using IHC, use the function "makeCalls.ihc"
+####~~ Refer to the Vignette to know more
+
+###~~~~Prerequisites
+
+##~~ Hardware
+Package should run on any computer (Linux/Unix, Windows or Mac) with R installed. However it is tested only on Linux/Ubuntu and Windows.
+
+
+##~~Software
+#~~~ Required libraries
+lattice
+Biobase
+lattice
+ComplexHeatmap
+impute
+
+
+
+
+
+
+COPYRIGHT AND LICENSE
+---------------------
+
+Copyright 2024 Windber Reseach Institute, Windber, PA - 15963. All Rights Reserved.
+Contact: Developer: Praveen K. Raj Kumar [P.RajKumar at wriwindber.org] Lab director: Hai Hu [H.hu at wriwindber.org]
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.

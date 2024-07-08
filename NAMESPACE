@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("stats", "median", "prcomp")
+importFrom("utils", "read.table", "write.table")
+importFrom(Biobase, exprs)
+importFrom(lattice, xyplot, panel.xyplot, panel.abline)
+importFrom(ComplexHeatmap, Heatmap, HeatmapAnnotation)
+importFrom(impute,impute.knn)
