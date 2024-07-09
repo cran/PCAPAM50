@@ -1,4 +1,4 @@
-e027873941dbfe9a9e7eca2194342f3e *DESCRIPTION
+6f0efcf5b3c346f8f8442fd21516e39b *DESCRIPTION
 2886425a963fd06751e264134ca1e3bb *NAMESPACE
 d697668a8c8ad9ce87e905835398e5b4 *R/data.R
 9e9b2012f8cd0f5a0b2700ed123f6045 *R/functions_PCA-PAM50.R
@@ -55,7 +55,7 @@ f9037c2d3fafa12b23d431dafb461925 *inst/PAM50/bioclassifier_example/sampleInputFi
 2663d54f9d8648f83e9087778bb28cbd *inst/PAM50/bioclassifier_example/sampleOutput/sampleInputFile_pam50scores.txt
 4c348405745b7a0a23c8d197f26f3c61 *inst/doc/PCAPAM50_vignette.R
 c91ed26c5190dd85ff86b14f0f916b96 *inst/doc/PCAPAM50_vignette.Rmd
-86b1df233409bc3da04f2f7810123cec *inst/doc/PCAPAM50_vignette.html
+f11c4c38a1ea9c8e31d781b8f8ef8519 *inst/doc/PCAPAM50_vignette.html
 f74c8a8947e48d743bb3d22a134b529e *inst/extdata/Sample_IHC_PAM_Mat.Rdat
 006f39466a4e9c43bc7161fb0d72de51 *inst/extdata/TCGA.712BC_IHC_PAM-Mat.Rdat
 05d45c35e663117cc64688b21a6cb9e6 *inst/functions_PCA-PAM50.R
