@@ -173,12 +173,12 @@ Important note: Ensure that your input matrix is also matched with the 50 gene n
 
 #### 3) Create the Clinical Subtype Data Frame
 
-Create a clinical subtype data frame using the provided test files. The inputDir determines the output folder.
+Create a clinical subtype data frame using the provided test files. The outDir determines the output folder.
 
 ```R
 df.cln <- data.frame(PatientID = Test.ihc$PatientID, IHC = Test.ihc$IHC, stringsAsFactors = FALSE)
 
-inputDir <- "Call.PC1"
+outDir <- "Call.PC1"
 ```
 
 #### 4) Call the Function
@@ -186,7 +186,7 @@ inputDir <- "Call.PC1"
 Run the makeCalls.PC1ihc function. Refer to the manual for detailed documentation on usage and arguments. Example run on test data:
 
 ```R
-res.PC1 <- makeCalls.PC1ihc(df.cln = df.cln, seed = 118, mat = Test.matrix, inputDir = inputDir)
+res.PC1 <- makeCalls.PC1ihc(df.cln = df.cln, seed = 118, mat = Test.matrix, outDir = outDir)
 ```
 
 The function returns a list containing:
@@ -201,7 +201,7 @@ The function returns a list containing:
 - DF.PC1 - Data frame of initial PCA results merged with clinical data.
 ```
 
-It generates a plot within the `inputDir` folder displaying the percentage of misclassified IHC cases along the PC1 axis with the vertical line identified as the cutoff.
+It generates a plot within the `outDir` folder displaying the percentage of misclassified IHC cases along the PC1 axis with the vertical line identified as the cutoff.
 
 ```{r plot, echo=FALSE, fig.cap="PC1_misclassified_cases.png", out.width = '50%'}
 knitr::include_graphics("./Plots/PC1_misclassified_cases.png")
@@ -209,7 +209,7 @@ knitr::include_graphics("./Plots/PC1_misclassified_cases.png")
 
 
 
-A heatmap is also generated within the `inputDir` folder.
+A heatmap is also generated within the `outDir` folder.
 
 ```{r hmap1, echo=FALSE, fig.cap="PC1ihc.Mdns_PAM50_normalized_heatmap.pdf", out.width = '50%'}
 knitr::include_graphics("./Plots/PC1ihc.Mdns_PAM50_normalized_heatmap.pdf")
@@ -233,10 +233,10 @@ df.pc1pam = data.frame(PatientID=res.PC1$Int.sbs$PatientID,
 			IHC=res.PC1$Int.sbs$IHC,
 			stringsAsFactors=F) ### IHC column is optional
   
-inputDir <- "Calls.PCAPAM50"
+outDir <- "Calls.PCAPAM50"
 
 
-res.PCAPAM50 <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = Test.matrix, inputDir=inputDir)
+res.PCAPAM50 <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = Test.matrix, outDir=outDir)
 ```
 
 The function returns a list containing:
@@ -249,7 +249,7 @@ The function returns a list containing:
 - outList - Detailed results from subtype prediction functions.
 ```
 
-A heatmap is generated within the inputDir folder.
+A heatmap is generated within the outDir folder.
 
 ```{r hmap2, echo=FALSE, fig.cap="PCAPAM50.Mdns_PAM50_normalized_heatmap.pdf", out.width = '50%'}
 knitr::include_graphics("./Plots/PCAPAM50.Mdns_PAM50_normalized_heatmap.pdf")
@@ -268,8 +268,8 @@ Call the function makeCalls.ihc() on test data. Refer to the manual for detailed
 
 
 ```R
-inputDir <- "Calls.PAM50"
-res.PAM50 <- makeCalls.ihc(df.cln = df.cln, seed = 118, mat = Test.matrix, inputDir = inputDir)
+outDir <- "Calls.PAM50"
+res.PAM50 <- makeCalls.ihc(df.cln = df.cln, seed = 118, mat = Test.matrix, outDir = outDir)
 ```
 
 The function returns a list containing:
@@ -280,7 +280,7 @@ The function returns a list containing:
 - SBS.colr - Colors associated with each subtype from the prediction results.
 - outList - Detailed results from subtype prediction functions.
 ```
-It also generates the heatmap within the inputDir folder.
+It also generates the heatmap within the outDir folder.
 
 ```{r hmap3, echo=FALSE, fig.cap="Ihc.Mdns_PAM50_normalized_heatmap.pdf", out.width = '50%'}
 knitr::include_graphics("./Plots/Ihc.Mdns_PAM50_normalized_heatmap.pdf")
@@ -416,23 +416,23 @@ Create the Clinical Subtype Data Frame
 ```R
 df.tcga.cln <- data.frame(PatientID = TCGA.712BC.IHC$PatientID, IHC = TCGA.712BC.IHC$IHC, stringsAsFactors = FALSE)
 
-inputDir <- "Call.PC1.TCGA"
+outDir <- "Call.PC1.TCGA"
 ```
 
 Call the Function
 
 ```R
-res.PC1 <- makeCalls.PC1ihc(df.cln = df.tcga.cln, seed = 118, mat = TCGA.712BC.matrix, inputDir = inputDir)
+res.PC1 <- makeCalls.PC1ihc(df.cln = df.tcga.cln, seed = 118, mat = TCGA.712BC.matrix, outDir = outDir)
 
 df.pc1pam = data.frame(PatientID=res.PC1$Int.sbs$PatientID,
             PAM50=res.PC1$Int.sbs$Int.SBS.Mdns.PC1ihc,
             IHC=res.PC1$Int.sbs$IHC,
             stringsAsFactors=F) ### IHC column is optional
   
-inputDir <- "Calls.PCAPAM50.TCGA"
+outDir <- "Calls.PCAPAM50.TCGA"
 
 TCGA.712BC.matrix = TCGA.712BC.matrix[,df.pc1pam$PatientID]
-res.PCAPAM50 <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = TCGA.712BC.matrix, inputDir=inputDir)
+res.PCAPAM50 <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = TCGA.712BC.matrix, outDir=outDir)
 ```
 
 #### 2) - PCAPAM50 vs PAM50

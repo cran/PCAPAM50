@@ -3,7 +3,8 @@
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("
 ========================================
-PCAPAM50 version 1.0.0
+PCAPAM50 version 1.0.2
+Package: https://cran.r-project.org/package=PCAPAM50
 Documentation: https://www.wriwindber.org/tools-portal/pca-pam50/
 
 If you use it in published research, please cite:
@@ -69,20 +70,20 @@ my.plotPCA = function(x, intgroup, ablne = 0,colours = c("red","hotpink","darkbl
 
 
 #### function to form a ER-balance subset and derive its median---write it to PAM50 dir
-makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
+makeCalls.ihc = function(df.cln, seed=118, mat, outDir=NULL){
   #message("###clinical subtype data.frame should have a column --PatientID-- with which mat cols are also named")
   #message("##IHC subtype column should be named ---IHC---")
-  if (is.null(inputDir)) {
-    inputDir <- file.path(tempdir(), "Calls.PAM50")
+  if (is.null(outDir)) {
+    outDir <- file.path(tempdir(), "Calls.PAM50")
   }
 
-  message("inputDir: ", inputDir)
+  message("outDir: ", outDir)
   # Check and create directory if it doesn't exist
-  if (!dir.exists(inputDir)) {
-    dir.create(inputDir, recursive = TRUE)
-    message("Directory created: ", inputDir)
+  if (!dir.exists(outDir)) {
+    dir.create(outDir, recursive = TRUE)
+    message("Directory created: ", outDir)
   } else {
-    message("Directory already exists: ", inputDir)
+    message("Directory already exists: ", outDir)
   }
 
   # Initial checks for 'df.cln' and 'mat'
@@ -110,11 +111,11 @@ makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
 
   #--Prepare the required input parameters for PAM50 method
-  predFiles              = file.path(inputDir, "TEST_pam_mat.txt")#provided inputFile for predictions
+  predFiles              = file.path(outDir, "Input_pam50genes_matrix.txt")#provided inputFile for predictions
   short                  = "Ihc.Mdns"# short name that will be used for output files
   calibrationParameters  = "Mdns.PAM50"# suffix for naming intrinsic subtype column in o/p
   Out.mdns.fl            = "Mdns.PAM50.txt"## where new medians will be written
-  calibrationFile        = file.path(inputDir, Out.mdns.fl)
+  calibrationFile        = file.path(outDir, Out.mdns.fl)
   hasClinical            = F #--PCAPAM50 donot use clinical info module of PAM50 classifier
 
   # Write the Test.matrix to the file
@@ -133,9 +134,9 @@ makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
 
   # Print paths for debugging
-  message("paramater Dir path: ", paramDir, "\n")
-  message("Input File path: ", predFiles, "\n")
-  message("Output Median File path: ", calibrationFile, "\n")
+  #message("paramater Dir path: ", paramDir, "\n")
+  #message("Input File path: ", predFiles, "\n")
+  #message("Output Median File path: ", calibrationFile, "\n")
 
 
   # Convert IHC column to uppercase to handle case insensitivity
@@ -188,7 +189,7 @@ makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
   # merge this median to PAM50-medians file "mediansPerDataset_v2.txt"
   fl.nm     = paste(paramDir,"mediansPerDataset_v2.txt",sep="/")
-  message("Reading file: ", fl.nm)
+  #message("Reading file: ", fl.nm)
   if (!file.exists(fl.nm)) {
     stop("File not found: ", fl.nm)
   }
@@ -207,16 +208,16 @@ makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
   # all the global variable required for assignment algorithm are set outside of function where it is been called
   ####
 
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
   source(paste(paramDir,"subtypePrediction_functions_PNmodified.R",sep="/"))
   source(paste(paramDir,"subtypePrediction_distributed_PNmodified.R",sep="/"))
 
   # Call the modified function
-  res = subtypePrediction_distributed(paramDir, inputDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
+  res = subtypePrediction_distributed(paramDir, outDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
 
   # Verify the expected output file paths
-  ot.fl = paste(inputDir, "/", short, "_pam50scores.txt", sep = "")
+  ot.fl = paste(outDir, "/", short, "_pam50scores.txt", sep = "")
   message("Expected output file: ", ot.fl)
 
   kl        = read.table(ot.fl,sep="\t",header=T,stringsAsFactors=F)#note md -- for median centered
@@ -230,24 +231,24 @@ makeCalls.ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
 
 #### function to form a ER-balance subet and derive its median---write it to PAM50 dir
-makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
+makeCalls.PC1ihc = function(df.cln, seed=118, mat, outDir=NULL){
 
   #message("###clinical subtype data.frame should have a column --PatientID-- with which mat cols are also named")
   #message("##IHC subtype column should be named ---IHC---")
-  # Set the default inputDir to a temporary directory if not provided
-  if (is.null(inputDir)) {
-    inputDir <- file.path(tempdir(), "Calls.PC1ihc")
+  # Set the default outDir to a temporary directory if not provided
+  if (is.null(outDir)) {
+    outDir <- file.path(tempdir(), "Calls.PC1ihc")
   }
 
   
-  message("inputDir: ", inputDir)
+  message("outDir: ", outDir)
 
   # Check and create directory if it doesn't exist
-  if (!dir.exists(inputDir)) {
-    dir.create(inputDir, recursive = TRUE)
-    message("Directory created: ", inputDir)
+  if (!dir.exists(outDir)) {
+    dir.create(outDir, recursive = TRUE)
+    message("Directory created: ", outDir)
   } else {
-    message("Directory already exists: ", inputDir)
+    message("Directory already exists: ", outDir)
   }
 
   # Initial checks for 'df.cln' and 'mat'
@@ -275,11 +276,11 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
 
   #--Prepare the required input parameters for PAM50 method
-  predFiles              = file.path(inputDir, "TEST_pam_mat.txt")#provided inputFile for predictions
+  predFiles              = file.path(outDir, "Input_pam50genes_matrix.txt")#provided inputFile for predictions
   short                  = "PC1ihc.Mdns"# short name that will be used for output files
   calibrationParameters  = "Mdns.PC1ihcPAM50"# suffix for naming intrinsic subtype column in o/p
   Out.mdns.fl            = "Mdns.PC1ihcPAM50.txt"## where new medians will be written
-  calibrationFile        = file.path(inputDir, Out.mdns.fl)
+  calibrationFile        = file.path(outDir, Out.mdns.fl)
   hasClinical            = F #--PCAPAM50 donot use clinical info module of PAM50 classifier
 
   # Write the Test.matrix to the file
@@ -298,9 +299,9 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
 
   # Print paths for debugging
-  message("paramater Dir path: ", paramDir, "\n")
-  message("Input File path: ", predFiles, "\n")
-  message("Output Median File path: ", calibrationFile, "\n")
+  #message("paramater Dir path: ", paramDir, "\n")
+  #message("Input File path: ", predFiles, "\n")
+  #message("Output Median File path: ", calibrationFile, "\n")
 
 
   # Pull the PCA components
@@ -353,7 +354,7 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
   df.mis  = do.call(rbind.data.frame,lapply(seq(-20,20,by=0.1),getno))
   num.min = df.mis$PC1[which(df.mis$Mis == min(df.mis$Mis))]
   
-  plt.fl     = paste(inputDir,"PC1_misclassified_cases.png",sep="/")
+  plt.fl     = paste(outDir,"PC1_misclassified_cases.png",sep="/")
   png(filename = plt.fl, width = 1400, height = 1500, units = "px", pointsize = 10, bg = "white", type = c("cairo"),res=200)
   par(mar=c(5,5,1,1))
   plot(x=df.mis$PC1, y=df.mis$Mis,xlab="PC1",ylab="% of misclassified cases",type="l",lwd=2,col="red",lty=1,cex.axis=2,cex.lab=2) 
@@ -406,7 +407,7 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 
   # merge this median to PAM50-medians file "mediansPerDataset_v2.txt"
   fl.nm     = paste(paramDir,"mediansPerDataset_v2.txt",sep="/")
-  message("Reading file: ", fl.nm)
+  #message("Reading file: ", fl.nm)
   if (!file.exists(fl.nm)) {
     stop("File not found: ", fl.nm)
   }
@@ -423,16 +424,16 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
   # run the assignment algorithm
   ####
 
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
   source(paste(paramDir,"subtypePrediction_functions_PNmodified.R",sep="/"))
   source(paste(paramDir,"subtypePrediction_distributed_PNmodified.R",sep="/"))
 
   # Call the modified function
-  res = subtypePrediction_distributed(paramDir, inputDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
+  res = subtypePrediction_distributed(paramDir, outDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
 
   # Verify the expected output file paths
-  ot.fl = paste(inputDir, "/", short, "_pam50scores.txt", sep = "")
+  ot.fl = paste(outDir, "/", short, "_pam50scores.txt", sep = "")
   message("Expected output file: ", ot.fl)
   kl        = read.table(ot.fl,sep="\t",header=T,stringsAsFactors=F)#note md -- for median centered
 
@@ -444,22 +445,22 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, inputDir=NULL){
 }
 
 
-makeCalls.v1PAM = function(df.pam, seed=118, mat, inputDir=NULL){
+makeCalls.v1PAM = function(df.pam, seed=118, mat, outDir=NULL){
 
   #message("###df.pam data.frame should have a column --PatientID-- with which mat cols are also named")
   #message("##v1PAM subtype column should be named ---PAM50---")
-  if (is.null(inputDir)) {
-    inputDir <- file.path(tempdir(), "Calls.PCAPAM50")
+  if (is.null(outDir)) {
+    outDir <- file.path(tempdir(), "Calls.PCAPAM50")
   }
 
-  message("inputDir: ", inputDir)
+  message("outDir: ", outDir)
 
   # Check and create directory if it doesn't exist
-  if (!dir.exists(inputDir)) {
-    dir.create(inputDir, recursive = TRUE)
-    message("Directory created: ", inputDir)
+  if (!dir.exists(outDir)) {
+    dir.create(outDir, recursive = TRUE)
+    message("Directory created: ", outDir)
   } else {
-    message("Directory already exists: ", inputDir)
+    message("Directory already exists: ", outDir)
   }
 
   # Initial checks for 'df.cln' and 'mat'
@@ -487,11 +488,11 @@ makeCalls.v1PAM = function(df.pam, seed=118, mat, inputDir=NULL){
 
 
   #--Prepare the required input parameters for PAM50 method
-  predFiles              = file.path(inputDir, "TEST_pam_mat.txt")#provided inputFile for predictions
+  predFiles              = file.path(outDir, "Input_pam50genes_matrix.txt")#provided inputFile for predictions
   short                  = "PCAPAM50.Mdns"# short name that will be used for output files
   calibrationParameters  = "Mdns.PCAPAM50"# suffix for naming intrinsic subtype column in o/p
   Out.mdns.fl            = "Mdns.PCAPAM50.txt"## where new medians will be written
-  calibrationFile        = file.path(inputDir, Out.mdns.fl)
+  calibrationFile        = file.path(outDir, Out.mdns.fl)
   hasClinical            = F #--PCAPAM50 donot use clinical info module of PAM50 classifier
 
   # Write the Test.matrix to the file
@@ -510,9 +511,9 @@ makeCalls.v1PAM = function(df.pam, seed=118, mat, inputDir=NULL){
 
 
   # Print paths for debugging
-  message("paramater Dir path: ", paramDir, "\n")
-  message("Input File path: ", predFiles, "\n")
-  message("Output Median File path: ", calibrationFile, "\n")
+  #message("paramater Dir path: ", paramDir, "\n")
+  #message("Input File path: ", predFiles, "\n")
+  #message("Output Median File path: ", calibrationFile, "\n")
 
 
   ERN.pam = df.pam[which(df.pam$PAM50 %in% c("Basal")),] ### get ER- samples data.frame
@@ -557,7 +558,7 @@ makeCalls.v1PAM = function(df.pam, seed=118, mat, inputDir=NULL){
 
   # merge this median to PAM50-medians file "mediansPerDataset_v2.txt"
   fl.nm     = paste(paramDir,"mediansPerDataset_v2.txt",sep="/")
-  message("Reading file: ", fl.nm)
+  #message("Reading file: ", fl.nm)
   if (!file.exists(fl.nm)) {
     stop("File not found: ", fl.nm)
   }
@@ -576,16 +577,16 @@ makeCalls.v1PAM = function(df.pam, seed=118, mat, inputDir=NULL){
   # all the global variable required for assignment algorithm are set outside of function where it is been called
   ####
 
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
-  message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_distributed_PNmodified.R", sep = "/"))
+  #message("Sourcing: ", paste(paramDir, "subtypePrediction_functions_PNmodified.R", sep = "/"))
   source(paste(paramDir,"subtypePrediction_functions_PNmodified.R",sep="/"))
   source(paste(paramDir,"subtypePrediction_distributed_PNmodified.R",sep="/"))
 
   # Call the modified function
-  res = subtypePrediction_distributed(paramDir, inputDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
+  res = subtypePrediction_distributed(paramDir, outDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters)
 
   # Verify the expected output file paths
-  ot.fl = paste(inputDir, "/", short, "_pam50scores.txt", sep = "")
+  ot.fl = paste(outDir, "/", short, "_pam50scores.txt", sep = "")
   message("Expected output file: ", ot.fl)
 
   kl        = read.table(ot.fl,sep="\t",header=T,stringsAsFactors=F)#note md -- for median centered

@@ -145,10 +145,11 @@ subtypePrediction_distributed <- function(paramDir, inputDir, short, predFiles, 
   colnames(df.sub) = sub.nm
   df.sub$Confidence = call.conf
   
-  pdf(paste(clustername, ".pdf", sep = ""))
-  #myHeatmap(out$testData, cbind(subtypeColors, conf.colors), file = paste(clustername, ".cdt", sep = ""), rowNames = rownames(out$testData))
+  pdf(paste(clustername, ".pdf", sep = ""), 
+    width = 8.5,#max(8.5, ncol(out$testData) * 0.13),  # Adjust width based on the number of columns
+    height = 11)#max(11, nrow(out$testData) * 0.7)) # Adjust height based on the number of rows
   ht = myComplexHeatmap(x= out$testData, t.colors = df.sub, contrast = 2) 
-  draw(ht)
+  draw(ht,heatmap_legend_side="left", annotation_legend_side="top")
   dev.off()
   
   pdf(pdfname1, height = 10, width = 12)

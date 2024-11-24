@@ -135,24 +135,29 @@ myComplexHeatmap <- function(x, t.colors = NA, contrast = 2) {
 		Subtype = t.colors[,1],
 		Confidence = confidence_levels,
 		col = list(Subtype = subtype_colors, Confidence = confidence_colors),
-		gp = gpar(col = "black"),annotation_name_gp = gpar(fontsize = 12), # Adjust font size as needed
+		annotation_name_gp = gpar(fontsize = 12), # Adjust font size as needed# gp = gpar(col = "black"),
 		show_legend = TRUE, # Change to FALSE if you don't want to show legends
-		#simple_anno_size = unit(1.5, "cm"),
+		simple_anno_size = unit(1, "cm"),
 		annotation_label = colnames(t.colors) # Adding labels
 	)
+	# Determine heatmap dimensions
+	heatmap_width <- unit(6.5, "in")
+	heatmap_height <- unit(9, "in")
 	
-	ht = ComplexHeatmap::Heatmap(x , name = "values", 
-		width = ncol(x)*unit(1.2, "mm"), 
-		height = nrow(x)*unit(2.5, "mm"),
+	ht = ComplexHeatmap::Heatmap(x , name = "Z score", 
+		#width = ncol(x)*unit(3, "mm"), 
+		#height = nrow(x)*unit(15, "mm"),
 		cluster_columns = TRUE, 
 		#row_dend_width = unit(15, "mm"),row_names_gp = gpar(fontsize = 8),column_dend_height = unit(6, "cm"),
 		show_column_names = FALSE,show_row_names = TRUE,
 		show_column_dend=TRUE, top_annotation = ha,
+		column_dend_height = unit(2, "cm"), row_dend_width = unit(0.5, "cm"),
 		clustering_distance_columns = function(x) as.dist(1-cor(t(x),use = "pa",method="pe")),
 		clustering_method_columns = 'ward.D2',
 		clustering_distance_rows = function(x) as.dist(1-cor(t(x),use = "pa",method="pe")),
 		clustering_method_rows = 'ward.D2',  show_parent_dend_line = FALSE,show_heatmap_legend = TRUE,
-		column_split = 4,row_names_gp = gpar(fontsize = 8)
+		column_split = 4,row_names_gp = gpar(fontsize = 8),
+		heatmap_width = heatmap_width, heatmap_height = heatmap_height
 		#row_gap = unit(0, "mm"),column_gap = unit(0, "mm")
 	)
 	return(ht)

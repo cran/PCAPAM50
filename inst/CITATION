@@ -1,14 +1,56 @@
-bibentry(
-  bibtype  = "Article",
+citHeader("To cite PCAPAM50 in publications, please use:")
+
+# Citation for PCA-PAM50
+pca_pam50 <- bibentry(
+  bibtype = "Article",
   title = "PCA-PAM50 improves consistency between breast cancer intrinsic and clinical subtyping reclassifying a subset of luminal A tumors as luminal B",
-  author = "Raj-Kumar, Praveen-Kumar and Liu, Jianfang and Hooke, Jeffrey A and Kovatich, Albert J and Kvecher, Leonid and Shriver, Craig D and Hu, Hai",
+  author = c(
+    person("Praveen-Kumar", "Raj-Kumar"),
+    person("Jianfang", "Liu"),
+    person("Jeffrey A.", "Hooke"),
+    person("Albert J.", "Kovatich"),
+    person("Leonid", "Kvecher"),
+    person("Craig D.", "Shriver"),
+    person("Hai", "Hu")
+  ),
   journal = "Scientific Reports",
-  year = "2019 May 28",
-  volume = "9(1)",
-  number = "7956",
-  doi = "10.1038/s41598-019-44339-4",
-  pmid = "31138829",
-  pmcid = "PMC6538748",
-  note = "Sci Rep.",
-  URL = "https://doi.org/10.1038/s41598-019-44339-4"
+  year = 2019,
+  volume = 9,
+  number = 1,
+  pages = "7956",
+  publisher = "Nature Publishing Group UK London",
+  doi = "10.1038/s41598-019-44339-4"
 )
+
+# Citation for PAM50
+pam50 <- bibentry(
+  bibtype = "Article",
+  title = "Supervised risk predictor of breast cancer based on intrinsic subtypes",
+  author = c(
+    person("Joel S.", "Parker"),
+    person("Michael", "Mullins"),
+    person("Maggie CU", "Cheang"),
+    person("Samuel", "Leung"),
+    person("David", "Voduc"),
+    person("Tammi", "Vickery"),
+    person("Sherri", "Davies"),
+    person("Christiane", "Fauron"),
+    person("Xiaping", "He"),
+    person("Zhiyuan", "Hu"),
+    person("et al.")
+  ),
+  journal = "Journal of Clinical Oncology",
+  year = 2009,
+  volume = 27,
+  number = 8,
+  pages = "1160--1167",
+  publisher = "American Society of Clinical Oncology",
+  doi = "10.1200/JCO.2008.18.1370"
+)
+
+citFooter("The package is available at https://CRAN.R-project.org/package=PCAPAM50. 
+The tool portal is available at https://www.wriwindber.org/tools-portal/pca-pam50/.")
+
+# Return the citations
+list(pca_pam50, pam50)
+

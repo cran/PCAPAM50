@@ -18,19 +18,19 @@ test_that("makeCalls.PC1ihc works correctly with test data", {
   df.cln <- data.frame(PatientID = Test.ihc$PatientID, IHC = Test.ihc$IHC, stringsAsFactors = FALSE)
   
   
-  #inputDir <- "Call.PC1"
-  inputDir <- file.path(tempdir(), "Call.PC1")
-  dir.create(inputDir, showWarnings = FALSE)  # Ensure the directory exists
+  #outDir <- "Call.PC1"
+  outDir <- file.path(tempdir(), "Call.PC1")
+  dir.create(outDir, showWarnings = FALSE)  # Ensure the directory exists
   
    
   
   
    
   # Call the function
-  result <- makeCalls.PC1ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, inputDir=inputDir)
+  result <- makeCalls.PC1ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, outDir=outDir)
   
   # Clean up the temporary directory for testcase
-  unlink(inputDir, recursive = TRUE)
+  unlink(outDir, recursive = TRUE)
     
   # Test the result
   expect_type(result, "list")

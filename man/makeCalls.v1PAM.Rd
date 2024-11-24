@@ -6,13 +6,13 @@
   data to create an ER-balanced set and produces PCAPAM50 Calls.
 }
 \usage{
-makeCalls.v1PAM(df.pam, seed = 118, mat, inputDir=NULL)
+makeCalls.v1PAM(df.pam, seed = 118, mat, outDir=NULL)
 }
 \arguments{
   \item{df.pam}{Data frame of PAM data; It should include the columns 'PatientID' and 'PAM50'.}
   \item{seed}{Seed for random number generation to ensure reproducibility.}
   \item{mat}{Matrix of preprocessed PAM50 expression data.}
-  \item{inputDir}{Directory for output files.If \code{NULL}, a subdirectory named "Calls.PCAPAM50" within the temporary directory will be used.}
+  \item{outDir}{Directory for output files.If \code{NULL}, a subdirectory named "Calls.PCAPAM50" within the temporary directory will be used.}
 }
 \value{
   Returns a list containing:
@@ -36,10 +36,10 @@ makeCalls.v1PAM(df.pam, seed = 118, mat, inputDir=NULL)
   Test.matrix <- Test.matrix[, Test.ihc$PatientID]
 
   df.cln <- data.frame(PatientID = Test.ihc$PatientID, IHC = Test.ihc$IHC, stringsAsFactors = FALSE)
-  inputDir <- "Call.PC1"
+  outDir <- "Call.PC1"
 
   # Make a secondary ER-balanced subset and derive intermediate intrinsic subtype calls
-  result <- makeCalls.PC1ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, inputDir=inputDir)
+  result <- makeCalls.PC1ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, outDir=outDir)
 
   df.pc1pam = data.frame(PatientID=result$Int.sbs$PatientID,
   			PAM50=result$Int.sbs$Int.SBS.Mdns.PC1ihc,
@@ -49,7 +49,7 @@ makeCalls.v1PAM(df.pam, seed = 118, mat, inputDir=NULL)
   
 
   # Make a tertiary ER-balanced set and PCAPAM50 calls
-  res <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = Test.matrix, inputDir=NULL)
+  res <- makeCalls.v1PAM(df.pam = df.pc1pam, seed = 118, mat = Test.matrix, outDir=NULL)
 }
 }
 \seealso{

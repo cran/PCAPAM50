@@ -8,13 +8,13 @@
   it produces conventional PAM50 intrinsic subtype calls.
 }
 \usage{
-makeCalls.ihc(df.cln, seed=118, mat, inputDir=NULL)
+makeCalls.ihc(df.cln, seed=118, mat, outDir=NULL)
 }
 \arguments{
   \item{df.cln}{Data frame of clinical data; It should include the columns 'PatientID' and 'IHC'.}
   \item{seed}{Seed for random number generation to ensure reproducibility. Default is 118.}
   \item{mat}{Matrix of preprocessed PAM50 expression data.}
-  \item{inputDir}{Directory for output files.If \code{NULL}, a subdirectory named "Calls.PAM50" within the temporary directory will be used.}
+  \item{outDir}{Directory for output files.If \code{NULL}, a subdirectory named "Calls.PAM50" within the temporary directory will be used.}
 }
 \value{
   Returns a list containing:
@@ -44,7 +44,7 @@ makeCalls.ihc(df.cln, seed=118, mat, inputDir=NULL)
   
 
   # Call the function
-  result <- makeCalls.ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, inputDir=NULL)
+  result <- makeCalls.ihc(df.cln=df.cln, seed = 118, mat = Test.matrix, outDir=NULL)
 }
 }
 \seealso{
