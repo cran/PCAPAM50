@@ -1,5 +1,9 @@
 subtypePrediction_distributed <- function(paramDir, inputDir, short, predFiles, hasClinical, calibrationFile, calibrationParameters) {
-  # Download normalized expression data
+  # Save the current par settings
+  #oldpar <- par(no.readonly = TRUE)
+  
+  # Ensure the par settings are reset when the function exits
+  #on.exit(par(oldpar))
   
   # Load the published centroids for classification
   trainCentroids <- paste(paramDir, "pam50_centroids.txt", sep = "/") # _PNmdfd

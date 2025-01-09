@@ -1,11 +1,11 @@
-#--last updated 5/29/2024 3:57 PM
+#--last updated 1/7/2025 11:24 AM
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("
 ========================================
-PCAPAM50 version 1.0.2
+PCAPAM50 version 1.0.3
 Package: https://cran.r-project.org/package=PCAPAM50
-Documentation: https://www.wriwindber.org/tools-portal/pca-pam50/
+Documentation: https://www.wriwindber.org/tools-portal/pcapam50/
 
 If you use it in published research, please cite:
 PCAPAM50: Raj-Kumar PK, et al.Scientific reports. 2019 May 28;9(1):7956.
@@ -103,11 +103,20 @@ makeCalls.ihc = function(df.cln, seed=118, mat, outDir=NULL){
   on.exit(setwd(oldwd))
   
   # Save the current par settings
-  oldpar <- par(no.readonly = TRUE)
+  #oldpar <- par(no.readonly = TRUE)
+  #oldpar$new <- NULL  # Remove the problematic 'new' parameter
   
   # Ensure the par settings are reset when the function exits
-  on.exit(par(oldpar))
-  
+  #on.exit(par(oldpar))
+  #becuase this creates a empty plot I am doing the following 
+  if (!is.null(dev.list())) {
+    # Save the current graphical parameters
+    oldpar <- par(no.readonly = TRUE)
+    # Ensure the graphical parameters are restored on function exit
+    on.exit(par(oldpar))
+    } else {
+        message("No active graphics device; skipping par save.")
+  }
 
 
   #--Prepare the required input parameters for PAM50 method
@@ -268,12 +277,20 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, outDir=NULL){
   on.exit(setwd(oldwd))
   
   # Save the current par settings
-  oldpar <- par(no.readonly = TRUE)
+  #oldpar <- par(no.readonly = TRUE)
+  #oldpar$new <- NULL  # Remove the problematic 'new' parameter
   
   # Ensure the par settings are reset when the function exits
-  on.exit(par(oldpar))
-  
-
+  #on.exit(par(oldpar))  
+  #becuase this creates a empty plot I am doing the following 
+  if (!is.null(dev.list())) {
+    # Save the current graphical parameters
+    oldpar <- par(no.readonly = TRUE)
+    # Ensure the graphical parameters are restored on function exit
+    on.exit(par(oldpar))
+    } else {
+        message("No active graphics device; skipping par save.")
+  }
 
   #--Prepare the required input parameters for PAM50 method
   predFiles              = file.path(outDir, "Input_pam50genes_matrix.txt")#provided inputFile for predictions
@@ -354,10 +371,10 @@ makeCalls.PC1ihc = function(df.cln, seed=118, mat, outDir=NULL){
   df.mis  = do.call(rbind.data.frame,lapply(seq(-20,20,by=0.1),getno))
   num.min = df.mis$PC1[which(df.mis$Mis == min(df.mis$Mis))]
   
-  plt.fl     = paste(outDir,"PC1_misclassified_cases.png",sep="/")
+  plt.fl     = paste(outDir,"PC1_discordance_cases.png",sep="/")
   png(filename = plt.fl, width = 1400, height = 1500, units = "px", pointsize = 10, bg = "white", type = c("cairo"),res=200)
   par(mar=c(5,5,1,1))
-  plot(x=df.mis$PC1, y=df.mis$Mis,xlab="PC1",ylab="% of misclassified cases",type="l",lwd=2,col="red",lty=1,cex.axis=2,cex.lab=2) 
+  plot(x=df.mis$PC1, y=df.mis$Mis,xlab="PC1",ylab="% of discordance cases",type="l",lwd=2,col="red",lty=1,cex.axis=2,cex.lab=2) 
   abline(v=num.min, lty=3,lwd=3)
   dev.off()
 
@@ -480,10 +497,20 @@ makeCalls.v1PAM = function(df.pam, seed=118, mat, outDir=NULL){
   on.exit(setwd(oldwd))
   
   # Save the current par settings
-  oldpar <- par(no.readonly = TRUE)
+  #oldpar <- par(no.readonly = TRUE)
+  #oldpar$new <- NULL  # Remove the problematic 'new' parameter
   
   # Ensure the par settings are reset when the function exits
-  on.exit(par(oldpar))
+  #on.exit(par(oldpar))
+  #becuase this creates a empty plot I am doing the following 
+  if (!is.null(dev.list())) {
+    # Save the current graphical parameters
+    oldpar <- par(no.readonly = TRUE)
+    # Ensure the graphical parameters are restored on function exit
+    on.exit(par(oldpar))
+    } else {
+        message("No active graphics device; skipping par save.")
+  }
   
 
 
